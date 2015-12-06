@@ -1,1 +1,7 @@
-\chapter*{introduction}
+\iftoggle{introduction}{%
+  % true
+  \chapter*{introduction}
+  \addcontentsline{toc}{chapter}{introduction}
+}{%
+  % false
+}

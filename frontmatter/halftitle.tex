@@ -28,7 +28,12 @@
   {\huge \vspace*{\fill} \@title \par \vspace*{\fill}}%     % Title set in \Huge size.
 \endgroup}
 \title{\thetitle}
-\makehalftitle
-%\setcounter{page}{\count@}
-%\addtocounter{page}{1}
 \makeatother
+%
+%
+\iftoggle{halftitle}{%
+  % true
+\makehalftitle
+}{%
+  % false
+}

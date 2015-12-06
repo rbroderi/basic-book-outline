@@ -13,4 +13,11 @@ Permission to use, copy, modify and distribute is given under \doclicenseLongTyp
 \vspace*{2\baselineskip}
 \cleardoublepage
 }
-\makecopyrightpage
+%
+%
+\iftoggle{copyright}{%
+  % true
+  \makecopyrightpage
+}{%
+  % false
+}

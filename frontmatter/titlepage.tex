@@ -36,4 +36,11 @@
 \title{\thetitle}
 \date{\thedate}
 \author{\theauthor}
+%
+%
+\iftoggle{titlepage}{%
+  % true
 \maketitle
+}{%
+  % false
+}
