@@ -1,0 +1,32 @@
+\makeatletter
+\titleformat{\chapter}[hang]{\normalfont\HUGE}{\color{red}\thechapter%
+    \hspace{10pt}\vline}{20pt}{\HUGE\vspace*{-.5em}}%
+\setlength{\headheight}{22pt}
+\renewcommand{\headrulewidth}{5pt}
+%\titleformat*{\section}{\LARGE\bfseries}
+%\titleformat*{\subsection}{\Large\bfseries}
+%\titleformat*{\subsubsection}{\large\bfseries}
+\patchcmd{\@fancyhead}{\rlap}{\color{headertext}\rlap}{}{}
+\patchcmd{\headrule}{\hrule}{\color{headerbar}\hrule}{}{}
+\patchcmd{\@fancyfoot}{\rlap}{\color{headertext}\rlap}{}{}
+\patchcmd{\footrule}{\hrule}{\color{headerbar}\hrule}{}{}
+%\setlength{\cftpartindent}{-1.25cm}
+%\renewcommand{\cftpartfont}{\bfseries\Large}
+\pagestyle{fancy}
+\fancypagestyle{part}{%
+\fancyfoot[C]{}
+} 
+\fancyfoot{}
+\fancyhead[RO,LE]{\Large{\oldstylenums{\thepage}}}
+\fancyhead[LO]{\large\leftmark}
+\fancyhead[RE]{\large\rightmark}
+ \renewcommand\thepart{}
+\renewcommand\partname{\begin{figure}[!b]
+\centering
+%\includegraphics[scale=.47]{includes/logo.pdf}
+\end{figure}
+\vspace*{6cm}
+}
+\patchcmd{\part}{plain}{empty}{}{}
+\pagestyle{fancy}
+\makeatother

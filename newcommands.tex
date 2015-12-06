@@ -1,0 +1,16 @@
+\makeatletter
+\newcommand*{\textfigdash}{\char"2012 }%
+\newcommand*{\fancyrefsubseclabelprefix}{subsec}
+\frefformat{vario}{\fancyrefsubseclabelprefix}{subsection\fancyrefdefaultspacing#1 #3}
+\Frefformat{vario}{\fancyrefsubseclabelprefix}{Subsection\fancyrefdefaultspacing#1 #3}
+\let\harvardurl\url
+\newlength{\myheight}
+
+\newcommand{\lmr}{\fontfamily{lmr}\selectfont}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+\chardef\textbackslash=`\\
+\newcommand{\noun}[1]{\textsc{#1}}
+%% Define a HUGE 
+\newcommand\HUGE{\@setfontsize\Huge{31}{40}} 
+\providecommand{\tabularnewline}{\\}
+\makeatother

@@ -1,0 +1,34 @@
+\makeatletter
+%\count@=\the\c@page
+\def\makehalftitle{\par
+ \begingroup
+   \def\thefootnote{\fnsymbol{footnote}}%
+   \def\@makefnmark{\hbox
+       to\z@{$\m@th^{\@thefnmark}$\hss}}%
+   \if@twocolumn
+     \twocolumn[\@makehalftitle]%
+     \else \newpage
+     \global\@topnum\z@   % Prevents figures from going at top of page.
+     \@makehalftitle \fi\thispagestyle{empty}\@thanks
+     \par\penalty -\@M
+ \endgroup
+ \setcounter{footnote}{0}%
+ \let\makehalftitle\relax
+ \let\@makehalftitle\relax
+ \gdef\@thanks{}\let\thanks\relax}
+
+\def\@makehalftitle{\newpage
+ \null
+ \vskip 0em                 % Vertical space above title.
+\begingroup
+\centering
+  \def\and{\unskip, }
+  \parindent=\z@
+  \pretolerance=10000
+  {\huge \vspace*{\fill} \@title \par \vspace*{\fill}}%     % Title set in \Huge size.
+\endgroup}
+\title{\thetitle}
+\makehalftitle
+%\setcounter{page}{\count@}
+%\addtocounter{page}{1}
+\makeatother
