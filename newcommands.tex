@@ -5,7 +5,6 @@
 \Frefformat{vario}{\fancyrefsubseclabelprefix}{Subsection\fancyrefdefaultspacing#1 #3}
 \let\harvardurl\url
 \newlength{\myheight}
-
 \newcommand{\lmr}{\fontfamily{lmr}\selectfont}
 \fancypagestyle{plain}{\pagestyle{fancy}}
 \chardef\textbackslash=`\\
@@ -13,14 +12,6 @@
 %% Define a HUGE 
 \newcommand\HUGE{\@setfontsize\Huge{31}{40}} 
 \providecommand{\tabularnewline}{\\}
+%
 \makeatother
-%toggles
-\newtoggle{acknowledgments}
-\newtoggle{copyright}
-\newtoggle{dedication}
-\newtoggle{foreword}
-\newtoggle{frontispiece}
-\newtoggle{halftitle}
-\newtoggle{introduction}
-\newtoggle{preface}
-\newtoggle{titlepage}
+\input{privatecommands}

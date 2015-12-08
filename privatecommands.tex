@@ -1,0 +1,25 @@
+\makeatletter
+\let\paragraphHeader\paragraph
+\let\paragraph\relax
+\newenvironment{paragraph}
+    {\begingroup\newcommand{\nomacros}{%
+        \GenericError{}{%
+            Illegal macro%
+        }{}{
+        Only one paragraph allowed per paragraph
+        }}%
+    \let\par\nomacros
+    %\let\\\nomacros
+    }
+    {\endgroup\par}
+%toggles
+\newtoggle{acknowledgments}
+\newtoggle{copyright}
+\newtoggle{dedication}
+\newtoggle{foreword}
+\newtoggle{frontispiece}
+\newtoggle{halftitle}
+\newtoggle{introduction}
+\newtoggle{preface}
+\newtoggle{titlepage}
+\makeatother
