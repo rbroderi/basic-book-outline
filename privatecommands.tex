@@ -1,17 +1,64 @@
 \makeatletter
+\pgfkeys{
+ /paragraph/.cd,
+  color/.initial=black,
+  color/.default=black,
+  color/.store in=\paragraphTextcolor,
+  size/.initial=\normalsize,
+  size/.store in=\paragraphSize,
+  size/.default=\normalsize,
+}
+\pgfkeys{
+ /paragraph/header/.cd,
+  color/.initial=black,
+  color/.default=black,
+  color/.store in=\paragraphHeaderTextcolor,
+  size/.initial=\normalsize,
+  size/.store in=\paragraphHeaderSize,
+  size/.default=\normalsize,
+  style/.initial=\normalfont,
+  style/.default=\normalfont,
+  style/.store in=\paragraphHeaderTextStyle
+}
 \let\paragraphHeader\paragraph
 \let\paragraph\relax
-\newenvironment{paragraph}
-    {\begingroup\newcommand{\nomacros}{%
-        \GenericError{}{%
-            Illegal macro%
-        }{}{
-        Only one paragraph allowed per paragraph
-        }}%
-    \let\par\nomacros
-    %\let\\\nomacros
-    }
-    {\endgroup\par}
+\NewDocumentEnvironment{paragraph}{O{} O{} O{}}
+{%
+	\pgfqkeys{/paragraph}{color=black,size=\normalsize,#1}
+	\paragraphSize\bgroup\color{\paragraphTextcolor}
+	\ifstrempty{#2}{%
+		\begingroup\newcommand{\nomacros}{%
+			\GenericError{}{%
+				Illegal macro%
+				}{}{
+				Only one paragraph allowed per paragraph
+		}}%
+		}{%
+		\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
+		\begingroup\newcommand{\nomacros}{%
+			\GenericError{}{%
+				Illegal macro%
+				}{}{
+				Only one paragraph allowed per paragraph
+		}}%
+	}%
+	\let\par\nomacros
+	%\let\\\nomacros
+	\ignorespaces%
+}
+{\endgroup\par\egroup}
+%
+\newcommand{\eparagraphHeader}[2][]
+{%
+\pgfqkeys{/paragraph/header}{style=\normalfont,color=black, size=\normalsize,#1}
+\titleformat{\paragraph}[runin]
+{\paragraphHeaderTextStyle\paragraphHeaderSize\color{\paragraphHeaderTextcolor}}{\theparagraph}{1em}{}
+%\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1em}
+\paragraphHeader{#2}
+%groups dont seem to work
+\titleformat{\paragraph}[runin]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+}
 %toggles
 \newtoggle{acknowledgments}
 \newtoggle{copyright}
