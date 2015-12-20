@@ -1,5 +1,6 @@
 \makeatletter
 \mdfsetup{skipabove=0pt,skipbelow=0pt}
+\newtoggle{aftersection}
 \pgfkeys{
  /paragraph/.cd,
   color/.initial=black,
@@ -47,15 +48,20 @@
 %
 \NewDocumentEnvironment{paragraph}{O{} O{} O{}}
 {%
-	\pgfqkeys{/paragraph}{#1}%
+\if@nobreak
+    \toggletrue{aftersection}
+    \fi
+    \pgfqkeys{/paragraph}{#1}%
+    \ifx\headingtext\undefined
+    \else
+    \vspace{\parskip}
+    \fi
     \begin{mdframed}[hidealllines=true,backgroundcolor=\pgfkeysvalueof{/paragraph/background},innerleftmargin=3pt,innerrightmargin=3pt,leftmargin=-3pt,rightmargin=-3pt]%
 	\pgfkeysvalueof{/paragraph/size}\bgroup\color{\pgfkeysvalueof{/paragraph/color}}%
 		\ifx\headingtext\undefined
 		\ifstrempty{#2}{
-		\if@afterindent
-	    \else
-	    \hspace{\parindent}
-	    \fi}{%
+    	\iftoggle{aftersection}{}{\hspace{\parindent}}
+	    }{%
 		\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
     	}%
 		\else
