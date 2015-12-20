@@ -1,64 +1,78 @@
 \makeatletter
+\mdfsetup{skipabove=0pt,skipbelow=0pt}
 \pgfkeys{
  /paragraph/.cd,
   color/.initial=black,
   color/.default=black,
-  color/.store in=\paragraphTextcolor,
   size/.initial=\normalsize,
-  size/.store in=\paragraphSize,
   size/.default=\normalsize,
+  background/.initial=white,
+  background/.default=white,
+  headingColor/.initial=black,
+  headingColor/.default=black,
+  headingSize/.initial=\normalsize,
+  headingSize/.default=\normalsize,
+  heading/.initial=\pgfkeysnovalue,
+  heading/.default=\pgfkeysnovalue,
+  heading/.store in=\headingtext
 }
 \pgfkeys{
  /paragraph/header/.cd,
   color/.initial=black,
   color/.default=black,
-  color/.store in=\paragraphHeaderTextcolor,
   size/.initial=\normalsize,
-  size/.store in=\paragraphHeaderSize,
   size/.default=\normalsize,
   style/.initial=\normalfont,
   style/.default=\normalfont,
-  style/.store in=\paragraphHeaderTextStyle
 }
 \let\paragraphHeader\paragraph
 \let\paragraph\relax
+\newcommand*{\eparagraphHeader}[2][]
+{%
+\pgfqkeys{/paragraph/header}{style=\normalfont,color=black, size=\normalsize,#1}%
+\titleformat{\paragraph}[runin]%
+{\pgfkeysvalueof{/paragraph/header/style}\pgfkeysvalueof{/paragraph/header/size}\color{\pgfkeysvalueof{/paragraph/header/color}}}{\theparagraph}{1em}{}%
+\titlespacing*{\paragraph}{0pt}{0pt}{1em}
+\paragraphHeader{#2}%
+%groups dont seem to work here so reset to default
+\defaultParagraphHeaderStyle
+}
+%
+% default paragraph header style
+%
+\newcommand*{\defaultParagraphHeaderStyle}{\titleformat{\paragraph}[runin]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}}
+%
+% Paragraph environment definition
+%
 \NewDocumentEnvironment{paragraph}{O{} O{} O{}}
 {%
-	\pgfqkeys{/paragraph}{color=black,size=\normalsize,#1}
-	\paragraphSize\bgroup\color{\paragraphTextcolor}
-	\ifstrempty{#2}{%
-		\begingroup\newcommand{\nomacros}{%
-			\GenericError{}{%
-				Illegal macro%
-				}{}{
-				Only one paragraph allowed per paragraph
-		}}%
-		}{%
+	\pgfqkeys{/paragraph}{#1}%
+    \begin{mdframed}[hidealllines=true,backgroundcolor=\pgfkeysvalueof{/paragraph/background},innerleftmargin=3pt,innerrightmargin=3pt,leftmargin=-3pt,rightmargin=-3pt]%
+	\pgfkeysvalueof{/paragraph/size}\bgroup\color{\pgfkeysvalueof{/paragraph/color}}%
+		\ifx\headingtext\undefined
+		\ifstrempty{#2}{
+		\if@afterindent
+	    \else
+	    \hspace{\parindent}
+	    \fi}{%
 		\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
+    	}%
+		\else
+		\eparagraphHeader[size=\normalsize,color=\pgfkeysvalueof{/paragraph/headingColor},style=\sc]{\headingtext}
+		\fi
 		\begingroup\newcommand{\nomacros}{%
 			\GenericError{}{%
 				Illegal macro%
 				}{}{
 				Only one paragraph allowed per paragraph
 		}}%
-	}%
 	\let\par\nomacros
-	%\let\\\nomacros
+	%\let\\
 	\ignorespaces%
 }
-{\endgroup\par\egroup}
+{\endgroup\par\egroup\end{mdframed}}
 %
-\newcommand{\eparagraphHeader}[2][]
-{%
-\pgfqkeys{/paragraph/header}{style=\normalfont,color=black, size=\normalsize,#1}
-\titleformat{\paragraph}[runin]
-{\paragraphHeaderTextStyle\paragraphHeaderSize\color{\paragraphHeaderTextcolor}}{\theparagraph}{1em}{}
-%\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1em}
-\paragraphHeader{#2}
-%groups dont seem to work
-\titleformat{\paragraph}[runin]
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-}
 %toggles
 \newtoggle{acknowledgments}
 \newtoggle{copyright}
