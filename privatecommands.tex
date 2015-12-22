@@ -2,70 +2,72 @@
 \mdfsetup{skipabove=0pt,skipbelow=0pt}
 \newtoggle{aftersection}
 \pgfkeys{
- /paragraph/.cd,
-  color/.initial=black,
-  color/.default=black,
-  size/.initial=\normalsize,
-  size/.default=\normalsize,
-  background/.initial=white,
-  background/.default=white,
-  headingColor/.initial=black,
-  headingColor/.default=black,
-  headingSize/.initial=\normalsize,
-  headingSize/.default=\normalsize,
-  heading/.initial=\pgfkeysnovalue,
-  heading/.default=\pgfkeysnovalue,
-  heading/.store in=\headingtext
+	/paragraph/.cd,
+	color/.initial=black,
+	color/.default=black,
+	size/.initial=\normalsize,
+	size/.default=\normalsize,
+	background/.initial=white,
+	background/.default=white,
+	headingColor/.initial=black,
+	headingColor/.default=black,
+	headingSize/.initial=\normalsize,
+	headingSize/.default=\normalsize,
+	headingStyle/.initial=\sc,
+	headingStyle/.default=\sc,
+	heading/.initial=\pgfkeysnovalue,
+	heading/.default=\pgfkeysnovalue,
+	heading/.store in=\headingtext
 }
 \pgfkeys{
- /paragraph/header/.cd,
-  color/.initial=black,
-  color/.default=black,
-  size/.initial=\normalsize,
-  size/.default=\normalsize,
-  style/.initial=\normalfont,
-  style/.default=\normalfont,
+	/paragraph/header/.cd,
+	color/.initial=black,
+	color/.default=black,
+	size/.initial=\normalsize,
+	size/.default=\normalsize,
+	style/.initial=\normalfont,
+	style/.default=\normalfont,
 }
 \let\paragraphHeader\paragraph
 \let\paragraph\relax
 \newcommand*{\eparagraphHeader}[2][]
 {%
-\pgfqkeys{/paragraph/header}{style=\normalfont,color=black, size=\normalsize,#1}%
-\titleformat{\paragraph}[runin]%
-{\pgfkeysvalueof{/paragraph/header/style}\pgfkeysvalueof{/paragraph/header/size}\color{\pgfkeysvalueof{/paragraph/header/color}}}{\theparagraph}{1em}{}%
-\titlespacing*{\paragraph}{0pt}{0pt}{1em}
-\paragraphHeader{#2}%
-%groups dont seem to work here so reset to default
-\defaultParagraphHeaderStyle
+	\pgfqkeys{/paragraph/header}{style=\normalfont,color=black, size=\normalsize,#1}%
+	\titleformat{\paragraph}[runin]%
+	{\pgfkeysvalueof{/paragraph/header/style}\pgfkeysvalueof{/paragraph/header/size}\color{\pgfkeysvalueof{/paragraph/header/color}}}{\theparagraph}{1em}{}%
+	\titlespacing*{\paragraph}{0pt}{0pt}{1em}
+	\paragraphHeader{#2}%
+	%groups dont seem to work here so reset to default
+	\defaultParagraphHeaderStyle
 }
 %
 % default paragraph header style
 %
 \newcommand*{\defaultParagraphHeaderStyle}{\titleformat{\paragraph}[runin]
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}}
+	{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}}
 %
 % Paragraph environment definition
 %
 \NewDocumentEnvironment{paragraph}{O{} O{} O{}}
 {%
-\if@nobreak
-    \toggletrue{aftersection}
-    \fi
-    \pgfqkeys{/paragraph}{#1}%
-    \ifx\headingtext\undefined
-    \else
-    \vspace{\parskip}
-    \fi
-    \begin{mdframed}[hidealllines=true,backgroundcolor=\pgfkeysvalueof{/paragraph/background},innerleftmargin=3pt,innerrightmargin=3pt,leftmargin=-3pt,rightmargin=-3pt]%
-	\pgfkeysvalueof{/paragraph/size}\bgroup\color{\pgfkeysvalueof{/paragraph/color}}%
+	\if@nobreak %@afterindent doesn't seem to work, would like a way to integrate with indentfirst package
+	\toggletrue{aftersection}
+	\fi
+	\pgfqkeys{/paragraph}{#1}%
+	\ifx\headingtext\undefined
+	\else
+		\vspace{\parskip}
+	\fi
+	\begin{mdframed}[hidealllines=true,backgroundcolor=\pgfkeysvalueof{/paragraph/background},innerleftmargin=3pt,innerrightmargin=3pt,leftmargin=-3pt,rightmargin=-3pt]%
+		\pgfkeysvalueof{/paragraph/size}\bgroup\color{\pgfkeysvalueof{/paragraph/color}}%
 		\ifx\headingtext\undefined
-		\ifstrempty{#2}{
-    	\iftoggle{aftersection}{}{\hspace{\parindent}}
-	    }{%
-		\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
-    	}%
+			\ifstrempty{#2}{
+				\iftoggle{aftersection}{}{\hspace{\parindent}}
+				}{%
+				\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
+			}%
 		\else
-		\eparagraphHeader[size=\normalsize,color=\pgfkeysvalueof{/paragraph/headingColor},style=\sc]{\headingtext}
+			\eparagraphHeader[size=\normalsize,color=\pgfkeysvalueof{/paragraph/headingColor},style=\pgfkeysvalueof{/paragraph/headingStyle}]{\headingtext}
 		\fi
 		\begingroup\newcommand{\nomacros}{%
 			\GenericError{}{%
@@ -73,20 +75,20 @@
 				}{}{
 				Only one paragraph allowed per paragraph
 		}}%
-	\let\par\nomacros
-	%\let\\
-	\ignorespaces%
-}
-{\endgroup\par\egroup\end{mdframed}}
-%
-%toggles
-\newtoggle{acknowledgments}
-\newtoggle{copyright}
-\newtoggle{dedication}
-\newtoggle{foreword}
-\newtoggle{frontispiece}
-\newtoggle{halftitle}
-\newtoggle{introduction}
-\newtoggle{preface}
-\newtoggle{titlepage}
-\makeatother
+		\let\par\nomacros
+		%\let\\
+		\ignorespaces%
+	}
+	{\endgroup\par\egroup\end{mdframed}}
+	%
+	%toggles
+	\newtoggle{acknowledgments}
+	\newtoggle{copyright}
+	\newtoggle{dedication}
+	\newtoggle{foreword}
+	\newtoggle{frontispiece}
+	\newtoggle{halftitle}
+	\newtoggle{introduction}
+	\newtoggle{preface}
+	\newtoggle{titlepage}
+	\makeatother

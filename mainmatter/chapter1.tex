@@ -5,7 +5,7 @@ par exemple
 \blindtext
 \bfseries{\blindtext}
 \end{paragraph}
-\begin{paragraph}[background=orange,headingColor=blue,heading=test]
+\begin{paragraph}[background=orange,headingColor=blue,heading=should overide lettrine needs warning,headingStyle=\slshape][U][seless]
 \blindtext
 \end{paragraph}
 \begin{paragraph}[background=blue]
@@ -13,6 +13,12 @@ par exemple
 \end{paragraph}
 \section{test for after section}
 \begin{paragraph}
+\blindtext
+\end{paragraph}
+\begin{paragraph}
+\blindtext
+\end{paragraph}
+\begin{paragraph}[heading=should cause a line skip]
 \blindtext
 \end{paragraph}
 \section{normal paragraph tests}
