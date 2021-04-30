@@ -1,5 +1,5 @@
 \makeatletter
-\mdfsetup{skipabove=0pt,skipbelow=0pt}
+\mdfsetup{skipabove=0pt,skipbelow=-1ex}
 \newtoggle{aftersection}
 \pgfkeys{
 	/paragraph/.cd,
@@ -64,7 +64,7 @@
 			\ifstrempty{#2}{
 				\iftoggle{aftersection}{}{\hspace{\parindent}}
 				}{%
-				\lettrine[loversize=0.1, nindent=0em, slope=-.5em]{#2}{#3}
+				\lettrine[loversize=0.1, nindent=0em, slope=-.5em,findent=0.125em,lhang=0.25]{#2}{#3}\hspace*{0.125em}%
 			}%
 		\else
 			\eparagraphHeader[size=\normalsize,color=\pgfkeysvalueof{/paragraph/headingColor},style=\pgfkeysvalueof{/paragraph/headingStyle}]{\headingtext}

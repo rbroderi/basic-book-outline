@@ -1,7 +1,32 @@
+\setmainfont[
+  Ligatures=TeX,
+   SmallCapsFont={CMU Serif},
+  SmallCapsFeatures={Letters=SmallCaps},
+]{Latin Modern Roman}
+\setsansfont[Ligatures=TeX]{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+% override due to oldstyle numbers from CMU Serif
+\LoadMicrotypeFile{Latin Modern Roman}
+\SetProtrusion
+{
+encoding = {*},
+family = {LatinModernRoman}
+}
+{1={250, 50},
+2 = {150,-100},
+3 = {100,-50},
+4 = {150,150},
+6 = {200, },
+7 = {200, 50},
+8 = {150,-50},
+9 = {100, 50}}
+
+
 \makeatletter
 \titleformat{\chapter}[hang]{\normalfont\HUGE}{\color{halfgrey}\thechapter%
     \hspace{10pt}\vline}{20pt}{\sloppy\HUGE}% sloppy for no hyphens
-\setlength{\headheight}{22pt}
+\setlength{\headheight}{35pt}
 \renewcommand{\headrulewidth}{5pt}
 %\titleformat*{\section}{\LARGE\bfseries}
 %\titleformat*{\subsection}{\Large\bfseries}

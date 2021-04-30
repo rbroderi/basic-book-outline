@@ -1,7 +1,10 @@
-\usepackage{silence}
-\WarningFilter[requested]{latex}{You have requested package}
-\ActivateWarningFilters[requested]
-\RequirePackage{pkgloader}
+%adds pdfornament subdirectory to path
+\makeatletter
+\def\input@path{{./}{./pgfornament}}
+\makeatother
+
+%\RequirePackage{pkgloader} % no longer maintained :-(
+\usepackage{fontspec}
 \usepackage{fancyhdr}
 \usepackage{pdfpages}
 \usepackage[
@@ -33,7 +36,7 @@
 \usepackage{natbib}
 \usepackage{patchcmd}
 \usepackage{pgfkeys}
-\usepackage{pgfornament/pgfornament}
+\usepackage{pgfornament}
 \usepackage{placeins}
 \usepackage{readarray}
 \usepackage{subcaption}
@@ -47,7 +50,7 @@
 \usepackage{xunicode}
 \usepackage{xstring}
 \usepackage[framemethod=tikz]{mdframed}
+\usepackage[notransparent]{svg} %transparency doesn't work in xelatex mode
 %\usepackage{tocloft}
-\LoadPackagesNow
+%\LoadPackagesNow
 %\expandafter\def\csname ver@subfig.sty\endcsname{}
-\DeactivateWarningFilters[requested]

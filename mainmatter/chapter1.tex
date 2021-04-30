@@ -1,4 +1,15 @@
 \chapter{First Chapter - with really long chapter name.. test of long name}
+
+example of including svg
+\begin{figure}
+\begin{minipage}{\dimexpr\linewidth/2\relax}
+\includesvg[width=\linewidth]{\imagepath/Test}%
+\subcaption{Subcaption Test}%
+\end{minipage}%
+\end{figure}
+
+
+
 \pagebreak
 \begin{paragraph}[color=red,size=\tiny][V][oico]
 par exemple
@@ -12,7 +23,7 @@ par exemple
 \blindtext
 \end{paragraph}
 \section{test for after section}
-\begin{paragraph}
+\begin{paragraph}[][T][est]
 \blindtext
 \end{paragraph}
 \begin{paragraph}
